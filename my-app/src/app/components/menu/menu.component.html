@@ -1,0 +1,49 @@
+<div class="menu-container">
+  
+  <div class="menu-categories">
+    <button class="category-btn active">All</button>
+    <button class="category-btn">Starters</button>
+    <button class="category-btn">Main Course</button>
+    <button class="category-btn">Desserts</button>
+  </div>
+
+  <div class="menu-grid">
+    <div *ngFor="let item of menuItems" class="menu-item" (click)="selectItem(item)">
+      <div class="menu-item-image">
+        <img [src]="item.imageUrl" [alt]="item.name">
+        <div class="menu-item-actions">
+          <button (click)="viewIn3D(item)" class="action-btn">
+            <i class="fas fa-cube"></i> View in 3D
+          </button>
+          <button (click)="viewInAR(item)" class="action-btn">
+            <i class="fas fa-camera"></i> View in AR
+          </button>
+        </div>
+      </div>
+      <div class="menu-item-info">
+        <h3>{{item.name}}</h3>
+        <p>{{item.description}}</p>
+        <span class="price">{{item.price}}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3D Model Viewer Modal -->
+  <div *ngIf="selectedItem" class="modal">
+    <div class="modal-content">
+      <button class="close-btn" (click)="selectedItem = null">&times;</button>
+      <model-viewer
+        src="{{selectedItem.modelUrl}}"
+        alt="3D food model"
+        auto-rotate
+        camera-controls
+        ar
+        ar-modes="webxr scene-viewer quick-look"
+        environment-image="neutral"
+        shadow-intensity="1"
+        camera-orbit="45deg 55deg 2.5m"
+        exposure="1">
+      </model-viewer>
+    </div>
+  </div>
+</div>

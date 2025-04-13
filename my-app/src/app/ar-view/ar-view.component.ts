@@ -85,6 +85,15 @@ export class ArViewComponent implements AfterViewInit {
       const modelClone = this.loadedModel.clone();
       modelClone.position.setFromMatrixPosition(this.reticle.matrix);
       this.scene.add(modelClone);
+      
+      // Add rotation animation
+      const animateRotation = () => {
+        if (modelClone) {
+          modelClone.rotation.y += 0.01; // Rotate 0.01 radians per frame
+          requestAnimationFrame(animateRotation);
+        }
+      };
+      animateRotation();
     }
   }
 
